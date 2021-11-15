@@ -6,13 +6,13 @@ public class Spawner : MonoBehaviour
 {
 
     [SerializeField] private Room[] roomPrefab;
-    [SerializeField] private Room[,] spawnedRooms;
-    private int roomSize = 20;
+    [HideInInspector] public Room[,] spawnedRooms;
+    [HideInInspector] public int roomSize = 20;
 
 
-    [SerializeField] private int roomCount;
+    public int roomCount;
 
-    void Start()
+    void Awake()
     {
         spawnedRooms = new Room[roomCount, roomCount];
         spawnedRooms[roomCount / 2, roomCount / 2] = roomPrefab[0];
