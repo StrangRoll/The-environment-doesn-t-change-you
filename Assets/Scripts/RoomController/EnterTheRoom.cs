@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class EnterTheRoom : MonoBehaviour
 {
     [SerializeField] private UnityEvent enterRoomEvent;
-    private void OnTriggerEnter()
+    public void StartRoom()
     {
         enterRoomEvent?.Invoke();
         gameObject.SetActive(false);

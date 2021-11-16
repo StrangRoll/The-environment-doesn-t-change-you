@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed = 10;
-    [SerializeField] GameObject player;
+    private float speed = 100;
+    Camera camera;
     Vector3 napr;
 
     // Start is called before the first frame update
     void Start()
     {
-        napr = transform.position - player.transform.position;
+        camera = Camera.main;
+        napr = camera.transform.forward;
         napr.Normalize();
     }
 

@@ -83,4 +83,10 @@ public class FirstPersonController : MonoBehaviour {
 		var ray = new Ray(transform.position, Vector3.down);
 		return Physics.SphereCast(ray, characterController.radius, characterController.height / 2 - characterController.radius + 0.1f, CollisionLayers);
 	}
+
+	private void OnTriggerEnter(Collider other)
+    {
+		other.gameObject.GetComponent<EnterTheRoom>().StartRoom();
+
+	}
 }
