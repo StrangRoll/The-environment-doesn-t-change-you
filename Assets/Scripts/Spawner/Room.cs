@@ -47,7 +47,7 @@ public class Room : MonoBehaviour
     public void CloseRoom()
     {
         //Debug.Log(Mathf.Round(transform.position.x / spawner.roomSize) - 1);
-        int x = (int)Mathf.Round(transform.position.x / spawner.roomSize);
+        /*int x = (int)Mathf.Round(transform.position.x / spawner.roomSize);
         int z = (int)Mathf.Round(transform.position.z / spawner.roomSize);
         if (x > 0)
             if (spawner.spawnedRooms[x - 1, z] != null)
@@ -76,6 +76,7 @@ public class Room : MonoBehaviour
                 transform.GetChild(3).gameObject.SetActive(true);
                 transform.GetChild(7).gameObject.SetActive(false);
             }
+        */
     }
 
 }
