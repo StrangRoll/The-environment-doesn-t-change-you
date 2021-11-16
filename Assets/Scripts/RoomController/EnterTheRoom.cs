@@ -10,11 +10,5 @@ public class EnterTheRoom : MonoBehaviour
     {
         enterRoomEvent?.Invoke();
         gameObject.SetActive(false);
-        StartCoroutine(SpawnEnemy());
-    }
-
-    IEnumerator SpawnEnemy()
-    {
-        yield return new WaitForSeconds(5);
     }
 }

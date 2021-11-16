@@ -5,6 +5,9 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     [SerializeField] private Spawner spawner;
+    [SerializeField] private EnemyLIfe enemyPrefab;
+    [SerializeField] private int minEnemys, maxEnemys;
+    private int countEnemies;
 
     void Start()
     {
@@ -81,14 +84,14 @@ public class Room : MonoBehaviour
                 transform.GetChild(4).gameObject.SetActive(false);
             }
 
-        if (x < spawner.roomCount)
+        if (x < spawner.roomCount - 1)
             if (spawner.spawnedRooms[x + 1, z] != null)
             {
                 transform.GetChild(1).gameObject.SetActive(true);
                 transform.GetChild(5).gameObject.SetActive(false);
             }
 
-        if (z < spawner.roomCount)
+        if (z < spawner.roomCount - 1)
             if (spawner.spawnedRooms[x, z + 1] != null)
             {
                 transform.GetChild(2).gameObject.SetActive(true);
@@ -103,6 +106,18 @@ public class Room : MonoBehaviour
             }
         transform.GetChild(8).gameObject.SetActive(true);
 
+        StartCoroutine(SpawnEnemies(transform.position.x, transform.position.z));
+
+    }
+
+    private IEnumerator SpawnEnemies(float x, float z)
+    {
+        yield return new WaitForSeconds(8);
+        countEnemies = Random.Range(minEnemys, maxEnemys + 1);
+        for (int i=0; i<countEnemies; i++)
+        {
+            Instantiate(enemyPrefab, new Vector3(Random.Range(x, x + 10), 7, Random.Range(z - 10, z)), Quaternion.identity);
+        }
     }
 
 }
