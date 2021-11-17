@@ -6,11 +6,11 @@ using UnityEngine.Events;
 public class Room : MonoBehaviour
 {
     [SerializeField] private Spawner spawner;
-    [SerializeField] private EnemyLIfe enemyPrefab;
-    [SerializeField] private int minEnemys, maxEnemys;
+    [SerializeField] private EnemyLIfe[] enemyPrefab;
 
     private int countEnemies;
     [SerializeField] private SendCountEnemyEvent SendEnemyCount;
+    [SerializeField] private SendEvent MinMaxEvent;
 
     void Start()
     {
@@ -111,25 +111,41 @@ public class Room : MonoBehaviour
             }
         transform.GetChild(8).gameObject.SetActive(true);
 
-        StartCoroutine(SpawnEnemies(transform.position.x, transform.position.z, x, z));
+        StartCoroutine(SpawnEnemies(x, z));
 
     }
 
-    private IEnumerator SpawnEnemies(float x, float z , int xE, int zE)
+    private IEnumerator SpawnEnemies(int x, int z)
     {
         yield return new WaitForSeconds(9);
-        countEnemies = Random.Range(minEnemys, maxEnemys + 1);
+        MinMaxEvent?.Invoke(x, z);
+    }
+    public void SpawnEnemiesWithMinMax(int min, int max)
+    {
+        float x = transform.position.x;
+        float z = transform.position.z;
+
+        int xE = (int)Mathf.Round(x / spawner.roomSize);
+        int zE = (int)Mathf.Round(z / spawner.roomSize);
+
+        countEnemies = Random.Range(min, max + 1);
         SendEnemyCount?.Invoke(countEnemies, xE, zE);
 
-        for (int i=0; i<countEnemies; i++)
+        for (int i = 0; i < countEnemies; i++)
         {
-            Instantiate(enemyPrefab, new Vector3(Random.Range(x, x + 10), 7, Random.Range(z - 10, z)), Quaternion.identity);
+            int index = Random.Range(0, enemyPrefab.Length);
+            Instantiate(enemyPrefab[index], new Vector3(Random.Range(x, x + 10), 8, Random.Range(z - 10, z)), Quaternion.identity);
         }
-
     }
-
+        
 }
 
 [System.Serializable]
 public class SendCountEnemyEvent : UnityEvent<int, int, int> { }
+
+[System.Serializable]
+public class SendEvent : UnityEvent<int, int> { }
+
+
+
 

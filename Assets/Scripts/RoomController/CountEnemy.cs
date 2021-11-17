@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CountEnemy : MonoBehaviour
 {
     private Room[,] rooms;
     private int enemyCount = 0;
     private int x, z;
+
+    [SerializeField] private int minEnemys, maxEnemys;
 
     public void SpawnedRooms(Room[,] spawnedRooms)
     {
@@ -28,4 +31,13 @@ public class CountEnemy : MonoBehaviour
             rooms[x, z].OpenRoom();
         }
     }
+
+    public void IncreaseMinMax(int x, int z)
+    {
+        rooms[x, z].SpawnEnemiesWithMinMax(minEnemys, maxEnemys);
+        minEnemys++;
+        maxEnemys++;
+    }
 }
+
+
