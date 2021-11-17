@@ -12,7 +12,7 @@ public class EnemyExplosion : MonoBehaviour
     {
         if (transform.position.y < -50) speed = 0;
         transform.LookAt(player.transform.position);
-        transform.Rotate(Random.Range(-10f,10f), Random.Range(-45f, 45f), 0);
+        transform.Rotate(Random.Range(-10f,10f), Random.Range(-30f, 30f), 0);
     }
 
     void Update()
