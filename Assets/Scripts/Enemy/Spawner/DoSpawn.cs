@@ -18,6 +18,7 @@ public class DoSpawn : MonoBehaviour
     {
         yield return new WaitForSeconds(35);
         spawnerEvent?.Invoke();
+        yield return new WaitForSeconds(2);
         GetComponent<EnemyLIfe>().Death();
     }
 }

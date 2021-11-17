@@ -9,7 +9,6 @@ public class Room : MonoBehaviour
     [SerializeField] private EnemyLIfe[] enemyPrefab;
 
     private int countEnemies;
-    [SerializeField] private SendCountEnemyEvent SendEnemyCount;
     [SerializeField] private SendEvent MinMaxEvent;
     private float x, z;
     private int xE, zE;
@@ -121,7 +120,7 @@ public class Room : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(10);
         MinMaxEvent?.Invoke(xE, zE);
     }
     public void SpawnEnemiesWithMinMax(int enemyCount)
@@ -132,10 +131,15 @@ public class Room : MonoBehaviour
             Instantiate(enemyPrefab[index], new Vector3(Random.Range(x, x + 10), 8, Random.Range(z - 10, z)), Quaternion.identity);
         }
     }
-    public IEnumerator EnemyDoSpawn(int enemyCount)
+    public void EnemyDoSpawn(int enemyCount)
     {
-        yield return new WaitForSeconds(9);
-        SendEnemyCount?.Invoke(enemyCount);
+        transform.GetChild(8).gameObject.SetActive(false);
+        transform.GetChild(8).gameObject.SetActive(true);
+        StartCoroutine(WhaitingAndSpawn(enemyCount));
+    }
+    private IEnumerator WhaitingAndSpawn(int enemyCount)
+    {
+        yield return new WaitForSeconds(10);
         for (int i = 0; i < enemyCount; i++)
         {
             int index = Random.Range(0, enemyPrefab.Length);
@@ -144,9 +148,6 @@ public class Room : MonoBehaviour
     }
 
 }
-
-[System.Serializable]
-public class SendCountEnemyEvent : UnityEvent<int> { }
 
 [System.Serializable]
 public class SendEvent : UnityEvent<int, int> { }

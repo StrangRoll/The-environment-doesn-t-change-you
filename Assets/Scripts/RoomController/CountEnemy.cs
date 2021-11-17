@@ -8,6 +8,7 @@ public class CountEnemy : MonoBehaviour
     private Room[,] rooms;
     private int enemyCount = 0;
     private int x, z;
+    private bool isTimeToSpawn = true;
 
     [SerializeField] private int minEnemys, maxEnemys;
 
@@ -15,11 +16,6 @@ public class CountEnemy : MonoBehaviour
     public void SpawnedRooms(Room[,] spawnedRooms)
     {
         rooms = spawnedRooms;
-    }
-
-    public void NewEnemies(int count)
-    {
-        enemyCount += count;
     }
 
     public void EnemyDeath()
@@ -43,8 +39,21 @@ public class CountEnemy : MonoBehaviour
     }
 
     public void EnemyDoSpawn()
-    { 
-        rooms[x, z].EnemyDoSpawn(Random.Range(minEnemys / 2, (maxEnemys + 1) / 2));
+    {
+        if (isTimeToSpawn)
+        {
+            isTimeToSpawn = false;
+            StartCoroutine(TimeToSpawnTimer());
+            int newEnemies = Random.Range(minEnemys / 2, (maxEnemys + 1) / 2);
+            enemyCount += newEnemies;
+            rooms[x, z].EnemyDoSpawn(newEnemies);
+        }
+    }
+
+    private IEnumerator TimeToSpawnTimer()
+    {
+        yield return new WaitForSeconds(10);
+        isTimeToSpawn = true;
     }
 }
 
