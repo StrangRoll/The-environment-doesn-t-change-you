@@ -11,6 +11,7 @@ public class CountEnemy : MonoBehaviour
 
     [SerializeField] private int minEnemys, maxEnemys;
 
+
     public void SpawnedRooms(Room[,] spawnedRooms)
     {
         rooms = spawnedRooms;
@@ -34,9 +35,9 @@ public class CountEnemy : MonoBehaviour
 
     public void IncreaseMinMax(int x, int z)
     {
-        rooms[x, z].SpawnEnemiesWithMinMax(minEnemys, maxEnemys);
+        rooms[x, z].SpawnEnemiesWithMinMax(Random.Range(minEnemys / 2, (maxEnemys + 1) / 2));
         minEnemys++;
-        maxEnemys++;
+        maxEnemys += 2;
     }
 }
 

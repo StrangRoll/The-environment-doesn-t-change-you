@@ -119,19 +119,19 @@ public class Room : MonoBehaviour
     {
         yield return new WaitForSeconds(9);
         MinMaxEvent?.Invoke(x, z);
+        
     }
-    public void SpawnEnemiesWithMinMax(int min, int max)
+    public void SpawnEnemiesWithMinMax(int enemyCount)
     {
         float x = transform.position.x;
         float z = transform.position.z;
 
         int xE = (int)Mathf.Round(x / spawner.roomSize);
         int zE = (int)Mathf.Round(z / spawner.roomSize);
+        Debug.Log(enemyCount);
+        SendEnemyCount?.Invoke(enemyCount, xE, zE);
 
-        countEnemies = Random.Range(min, max + 1);
-        SendEnemyCount?.Invoke(countEnemies, xE, zE);
-
-        for (int i = 0; i < countEnemies; i++)
+        for (int i = 0; i < enemyCount; i++)
         {
             int index = Random.Range(0, enemyPrefab.Length);
             Instantiate(enemyPrefab[index], new Vector3(Random.Range(x, x + 10), 8, Random.Range(z - 10, z)), Quaternion.identity);
