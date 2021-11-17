@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Room : MonoBehaviour
 {
     [SerializeField] private Spawner spawner;
     [SerializeField] private EnemyLIfe enemyPrefab;
     [SerializeField] private int minEnemys, maxEnemys;
+
     private int countEnemies;
+    [SerializeField] private SendCountEnemyEvent SendEnemyCount;
 
     void Start()
     {
@@ -47,19 +50,20 @@ public class Room : MonoBehaviour
         //Debug.Log(Mathf.Round(transform.position.x / spawner.roomSize) - 1);
         int x = (int)Mathf.Round(transform.position.x / spawner.roomSize);
         int z = (int)Mathf.Round(transform.position.z / spawner.roomSize);
+        if (transform.position.y < -50) return;
         if (x > 0)
             if (spawner.spawnedRooms[x - 1, z] != null)
             {
                 transform.GetChild(0).gameObject.SetActive(false);
             }
                 
-        if (x < spawner.roomCount)
+        if (x < spawner.roomCount - 1)
             if (spawner.spawnedRooms[x + 1, z] != null)
             {
                 transform.GetChild(1).gameObject.SetActive(false);
             }
 
-        if (z < spawner.roomCount)
+        if (z < spawner.roomCount - 1)
             if (spawner.spawnedRooms[x, z + 1] != null)
             {
                 transform.GetChild(2).gameObject.SetActive(false);
@@ -77,6 +81,7 @@ public class Room : MonoBehaviour
         //Debug.Log(Mathf.Round(transform.position.x / spawner.roomSize) - 1);
         int x = (int)Mathf.Round(transform.position.x / spawner.roomSize);
         int z = (int)Mathf.Round(transform.position.z / spawner.roomSize);
+        if (transform.position.y < -50) return;
         if (x > 0)
             if (spawner.spawnedRooms[x - 1, z] != null)
             {
@@ -106,18 +111,25 @@ public class Room : MonoBehaviour
             }
         transform.GetChild(8).gameObject.SetActive(true);
 
-        StartCoroutine(SpawnEnemies(transform.position.x, transform.position.z));
+        StartCoroutine(SpawnEnemies(transform.position.x, transform.position.z, x, z));
 
     }
 
-    private IEnumerator SpawnEnemies(float x, float z)
+    private IEnumerator SpawnEnemies(float x, float z , int xE, int zE)
     {
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(9);
         countEnemies = Random.Range(minEnemys, maxEnemys + 1);
+        SendEnemyCount?.Invoke(countEnemies, xE, zE);
+
         for (int i=0; i<countEnemies; i++)
         {
             Instantiate(enemyPrefab, new Vector3(Random.Range(x, x + 10), 7, Random.Range(z - 10, z)), Quaternion.identity);
         }
+
     }
 
 }
+
+[System.Serializable]
+public class SendCountEnemyEvent : UnityEvent<int, int, int> { }
+

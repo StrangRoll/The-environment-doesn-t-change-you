@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LaserGun : MonoBehaviour
 {
-
+    public float reloadTimer = 0.3f;
 
     private float fireInput;
     [SerializeField] Bullet bullet;
@@ -23,7 +23,7 @@ public class LaserGun : MonoBehaviour
     }
     IEnumerator Reload()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(reloadTimer);
         reload = false;
     }
 }

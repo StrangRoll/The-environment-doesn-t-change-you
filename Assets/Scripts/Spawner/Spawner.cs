@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Spawner : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Spawner : MonoBehaviour
     [HideInInspector] public Room[,] spawnedRooms;
     [HideInInspector] public int roomSize = 20;
 
+    [SerializeField] private RoomSender sendRoomEvent;
 
     public int roomCount;
 
@@ -20,6 +22,7 @@ public class Spawner : MonoBehaviour
         {
             roomSpawner();
         }
+        sendRoomEvent?.Invoke(spawnedRooms);
     }
 
 
@@ -39,7 +42,10 @@ public class Spawner : MonoBehaviour
 
         Room newRoom = roomPrefab[Random.Range(0, roomPrefab.Length)];
         Vector3 newRoomPosition = vacantPlaces[Random.Range(0, vacantPlaces.Count)];
-        Instantiate(newRoom, newRoomPosition * roomSize, newRoom.transform.rotation);
-        spawnedRooms[(int)newRoomPosition.x, (int)newRoomPosition.z] = newRoom;
+        spawnedRooms[(int)newRoomPosition.x, (int)newRoomPosition.z] = Instantiate(newRoom, newRoomPosition * roomSize, newRoom.transform.rotation);
     }
 }
+
+[System.Serializable]
+public class RoomSender : UnityEvent<Room[,]> { }
+

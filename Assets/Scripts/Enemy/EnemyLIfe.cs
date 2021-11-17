@@ -1,25 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyLIfe : MonoBehaviour
 {
     [SerializeField] private float lifes;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private UnityEvent DeathEvent;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
     public void Hit()
     {
         lifes--;
-        Debug.Log(lifes);
-        if (lifes <= 0) Destroy(gameObject);
+        if (lifes <= 0)
+        {
+            DeathEvent?.Invoke();
+            Destroy(gameObject);
+        }
     }
 }
