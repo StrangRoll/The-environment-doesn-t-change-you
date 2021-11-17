@@ -11,7 +11,7 @@ public class EnemyBullet : MonoBehaviour
     {
         if (transform.position.y < -50) speed = 0;
         transform.LookAt(player.transform.position);
-        transform.Rotate(Random.Range(-5f,5f), Random.Range(-5f,5f), 0);
+        transform.Rotate(Random.Range(-10f,10f), Random.Range(-10f, 10f), 0);
     }
 
     // Update is called once per frame

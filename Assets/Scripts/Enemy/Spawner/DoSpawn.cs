@@ -16,7 +16,7 @@ public class DoSpawn : MonoBehaviour
     }
     IEnumerator DoSpawner()
     {
-        yield return new WaitForSeconds(35);
+        yield return new WaitForSeconds(23);
         spawnerEvent?.Invoke();
         yield return new WaitForSeconds(2);
         GetComponent<EnemyLIfe>().Death();

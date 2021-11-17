@@ -147,6 +147,42 @@ public class Room : MonoBehaviour
         }
     }
 
+
+
+
+    public void CloseBossRoom()
+    {
+        if (transform.position.y < -50) return;
+        if (xE > 0)
+            if (spawnedRooms[xE - 1, zE] != null)
+            {
+                transform.GetChild(0).gameObject.SetActive(true);
+                transform.GetChild(4).gameObject.SetActive(false);
+            }
+
+        if (xE < roomCount - 1)
+            if (spawnedRooms[xE + 1, zE] != null)
+            {
+                transform.GetChild(1).gameObject.SetActive(true);
+                transform.GetChild(5).gameObject.SetActive(false);
+            }
+
+        if (zE < roomCount - 1)
+            if (spawnedRooms[xE, zE + 1] != null)
+            {
+                transform.GetChild(2).gameObject.SetActive(true);
+                transform.GetChild(6).gameObject.SetActive(false);
+            }
+
+        if (zE > 0)
+            if (spawnedRooms[xE, zE - 1] != null)
+            {
+                transform.GetChild(3).gameObject.SetActive(true);
+                transform.GetChild(7).gameObject.SetActive(false);
+            }
+
+    }
+
 }
 
 [System.Serializable]

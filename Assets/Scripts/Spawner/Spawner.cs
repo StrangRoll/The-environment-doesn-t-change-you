@@ -7,6 +7,7 @@ public class Spawner : MonoBehaviour
 {
 
     [SerializeField] private Room[] roomPrefab;
+    [SerializeField] private Room[] bossRoomPrefab;
     [HideInInspector] public Room[,] spawnedRooms;
     [HideInInspector] public int roomSize = 20;
 
@@ -20,13 +21,14 @@ public class Spawner : MonoBehaviour
         spawnedRooms[roomCount / 2, roomCount / 2] = roomPrefab[0];
         for (int i = 0; i < roomCount; i++)
         {
-            roomSpawner();
+            roomSpawner(roomPrefab);
         }
+        roomSpawner(bossRoomPrefab);
         sendRoomEvent?.Invoke(spawnedRooms);
     }
 
 
-    private void roomSpawner()
+    private void roomSpawner(Room[] roomPrefab)
     {
         List<Vector3> vacantPlaces = new List<Vector3>();
         for (int x = 0; x < spawnedRooms.GetLength(0); x++)
@@ -42,8 +44,10 @@ public class Spawner : MonoBehaviour
 
         Room newRoom = roomPrefab[Random.Range(0, roomPrefab.Length)];
         Vector3 newRoomPosition = vacantPlaces[Random.Range(0, vacantPlaces.Count)];
-        spawnedRooms[(int)newRoomPosition.x, (int)newRoomPosition.z] = Instantiate(newRoom, newRoomPosition * roomSize, newRoom.transform.rotation);
+        spawnedRooms[(int)newRoomPosition.x, (int)newRoomPosition.z] = Instantiate(newRoom, newRoomPosition * roomSize, Quaternion.identity);
     }
+
+
 }
 
 [System.Serializable]
