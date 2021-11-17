@@ -128,7 +128,6 @@ public class Room : MonoBehaviour
 
         int xE = (int)Mathf.Round(x / spawner.roomSize);
         int zE = (int)Mathf.Round(z / spawner.roomSize);
-        Debug.Log(enemyCount);
         SendEnemyCount?.Invoke(enemyCount, xE, zE);
 
         for (int i = 0; i < enemyCount; i++)
