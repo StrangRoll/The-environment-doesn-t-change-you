@@ -17,11 +17,9 @@ public class CountEnemy : MonoBehaviour
         rooms = spawnedRooms;
     }
 
-    public void NewEnemies(int count, int i, int j)
+    public void NewEnemies(int count)
     {
-        enemyCount = count;
-        x = i;
-        z = j;
+        enemyCount += count;
     }
 
     public void EnemyDeath()
@@ -33,11 +31,20 @@ public class CountEnemy : MonoBehaviour
         }
     }
 
-    public void IncreaseMinMax(int x, int z)
+    public void IncreaseMinMax(int i, int j)
     {
-        rooms[x, z].SpawnEnemiesWithMinMax(Random.Range(minEnemys / 2, (maxEnemys + 1) / 2));
+        x = i;
+        z = j;
+        int newEnemies = Random.Range(minEnemys / 2, (maxEnemys + 1) / 2);
+        enemyCount += newEnemies;
+        rooms[x, z].SpawnEnemiesWithMinMax(newEnemies);
         minEnemys++;
         maxEnemys += 2;
+    }
+
+    public void EnemyDoSpawn()
+    { 
+        rooms[x, z].EnemyDoSpawn(Random.Range(minEnemys / 2, (maxEnemys + 1) / 2));
     }
 }
 

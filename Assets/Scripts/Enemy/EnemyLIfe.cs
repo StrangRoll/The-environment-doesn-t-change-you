@@ -14,8 +14,12 @@ public class EnemyLIfe : MonoBehaviour
         lifes--;
         if (lifes <= 0)
         {
-            DeathEvent?.Invoke();
-            Destroy(gameObject);
+            Death();
         }
+    }
+    public void Death()
+    {
+        DeathEvent?.Invoke();
+        Destroy(gameObject);
     }
 }
