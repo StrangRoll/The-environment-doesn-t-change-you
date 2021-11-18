@@ -7,6 +7,6 @@ public class Rotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(Vector3.up, Random.Range(-4000f, 4000f) * Time.deltaTime);
+        transform.Rotate(Vector3.up, Random.Range(-5000f, 5000f) * Time.deltaTime);
     }
 }

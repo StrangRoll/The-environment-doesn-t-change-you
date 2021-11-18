@@ -120,7 +120,7 @@ public class Room : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
         MinMaxEvent?.Invoke(xE, zE);
     }
     public void SpawnEnemiesWithMinMax(int enemyCount)
@@ -139,7 +139,7 @@ public class Room : MonoBehaviour
     }
     private IEnumerator WhaitingAndSpawn(int enemyCount)
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
         for (int i = 0; i < enemyCount; i++)
         {
             int index = Random.Range(0, enemyPrefab.Length);
@@ -148,7 +148,21 @@ public class Room : MonoBehaviour
     }
 
 
+    public void Zatuh()
+    {
+        StartCoroutine(ZatuhTime());
+    }
 
+    private IEnumerator ZatuhTime()
+    {
+
+        for (int i = 0; i < 40; i++)
+        {
+            yield return new WaitForSeconds(0.1f);
+            GetComponent<AudioSource>().volume -= 0.03f;
+        }
+        GetComponent<AudioSource>().Stop();
+    }
 
     public void CloseBossRoom()
     {

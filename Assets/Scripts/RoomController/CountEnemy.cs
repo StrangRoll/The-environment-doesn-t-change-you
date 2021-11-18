@@ -24,6 +24,7 @@ public class CountEnemy : MonoBehaviour
         if (enemyCount <= 0)
         {
             rooms[x, z].OpenRoom();
+            rooms[x, z].Zatuh();
         }
     }
 
@@ -31,7 +32,7 @@ public class CountEnemy : MonoBehaviour
     {
         x = i;
         z = j;
-        int newEnemies = Random.Range(minEnemys / 2, (maxEnemys + 1) / 2);
+        int newEnemies = Random.Range(minEnemys, maxEnemys + 1);
         enemyCount += newEnemies;
         rooms[x, z].SpawnEnemiesWithMinMax(newEnemies);
         minEnemys++;
