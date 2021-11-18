@@ -37,7 +37,7 @@ public class FirstPersonController : MonoBehaviour {
 	
 	void Update () {
 		bool touchesGround = onGround();
-		float runMultiplier = 1f + 2f * Input.GetAxis("Run");
+		float runMultiplier = 1f + 2f * (1 - Input.GetAxis("Run"));
 		float y = transform.position.y;
 		Vector3 movementVector = transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal");
 		if (movementVector.sqrMagnitude > 1) {

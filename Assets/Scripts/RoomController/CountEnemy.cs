@@ -44,7 +44,7 @@ public class CountEnemy : MonoBehaviour
         {
             isTimeToSpawn = false;
             StartCoroutine(TimeToSpawnTimer());
-            int newEnemies = Random.Range(minEnemys / 2, (maxEnemys + 1) / 2);
+            int newEnemies = Random.Range(minEnemys, (maxEnemys + 1));
             enemyCount += newEnemies;
             rooms[x, z].EnemyDoSpawn(newEnemies);
         }

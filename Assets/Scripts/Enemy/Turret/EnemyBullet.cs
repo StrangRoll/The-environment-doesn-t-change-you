@@ -21,7 +21,7 @@ public class EnemyBullet : MonoBehaviour
     }
     private void OnCollisionEnter(Collision other)
     {
-        other.gameObject.GetComponent<PlayerLifes>().Hit();
         Destroy(gameObject);
+        other.gameObject.GetComponent<PlayerLifes>().Hit();
     }
 }
